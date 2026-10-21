@@ -151,6 +151,18 @@
   const chatForm=$('#chat-form');if(chatForm)chatForm.onsubmit=e=>{e.preventDefault();const input=$('#chat-input');submitChat(input.value);input.value=''};
   let lastRegen=performance.now();setInterval(()=>{if(state.screen!=='ui')return;const now=performance.now();if(player.sitting&&!player.dead){const meditation=player.skills['冥思']||{xp:0,level:1};meditation.xp+=1;if(meditation.xp>=60){meditation.xp=0;meditation.level++;toast(`冥思修為提升至 Lv.${meditation.level}`)}player.skills['冥思']=meditation;const regen=2+meditation.level;player.hp=Math.min(player.maxHp,player.hp+regen);player.mp=Math.min(player.maxMp,player.mp+regen+1);if(state.enemy?.alive&&Math.random()<.04)enemyHit();refreshUI();save()}else if(now-lastRegen>6000){player.mp=Math.min(player.maxMp,player.mp+1);lastRegen=now;refreshUI()}if(state.target&&state.enemy?.alive&&now-state.attackAt>2300){attack()}},1000);
   $('#save-file').onchange=e=>{importSave(e.target.files[0]);e.target.value=''};
+  // Read-only bridge for the independently rendered 3D exploration scene.
+  window.SwordBridge={
+    snapshot:()=>({screen:state.screen,zone:player.zone,zoneName:sceneForZone().name,
+      position:{...state.position},enemy:state.enemy?{name:state.enemy.name,hp:state.enemy.hp,maxHp:state.enemy.maxHp,alive:state.enemy.alive,x:state.enemy.x,y:state.enemy.y}:null,
+      target:!!state.target,level:player.level,job:player.job,hp:player.hp,maxHp:player.maxHp,
+      quests:player.quests.map(q=>({name:q.name,progress:q.progress,need:q.need,done:q.done})),
+      moving:Object.values(state.keys).some(Boolean),attackAt:state.attackAt}),
+    selectEnemy:()=>{if(state.enemy?.alive){state.target=true;refreshUI();return true}return false},
+    attack:()=>{if(state.enemy?.alive){state.target=true;attack();return true}return false},
+    skill:i=>{if(state.enemy?.alive)state.target=true;useSkill(skillAt(i));},
+    openQuest:()=>openWindow('quests')
+  };
   window.addEventListener('pagehide',save);
   const Observer=new ResizeObserver(resize);Observer.observe(canvas.parentElement);resize();showScreen('login');requestAnimationFrame(function loginDraw(){if(state.screen!=='ui')draw(performance.now());if(state.screen!=='ui')requestAnimationFrame(loginDraw)});
   refreshUI();
