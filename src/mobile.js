@@ -12,7 +12,12 @@ joy.addEventListener('pointerdown',e=>{e.preventDefault();active=e.pointerId;joy
 joy.addEventListener('pointermove',e=>{if(e.pointerId===active)update(e)});
 ['pointerup','pointercancel','lostpointercapture'].forEach(t=>joy.addEventListener(t,e=>{if(e.pointerId===active){active=null;release()}}));
 function update(e){const r=joy.getBoundingClientRect(),x=e.clientX-(r.left+r.width/2),y=e.clientY-(r.top+r.height/2),max=r.width*.31,dist=Math.hypot(x,y),factor=Math.min(1,max/(dist||1));knob.style.transform=`translate(${x*factor}px,${y*factor}px)`;const keys=new Set();if(y < -max*.22)keys.add('w');if(y>max*.22)keys.add('s');if(x < -max*.22)keys.add('a');if(x > max*.22)keys.add('d');setKeys(keys)}
-root.querySelectorAll('[data-key]').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();fire(b.dataset.key,true)}));
+root.querySelectorAll('[data-key]').forEach(b=>{
+ let timer=null;
+ const stop=()=>{if(timer!==null){clearInterval(timer);timer=null}};
+ b.addEventListener('pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);fire(b.dataset.key,true);stop();if(b.dataset.key==='q')timer=setInterval(()=>fire('q',true),160)});
+ for(const ev of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(ev,stop);
+});
 root.querySelector('#mobile-quest').addEventListener('click',()=>fire('F3',true));
 root.querySelector('#mobile-bag').addEventListener('click',()=>fire('F4',true));
 root.querySelector('#mobile-fullscreen').addEventListener('click',()=>{const el=document.documentElement;if(document.fullscreenElement)document.exitFullscreen?.();else el.requestFullscreen?.().catch(()=>{})});
