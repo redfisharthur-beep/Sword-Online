@@ -1,78 +1,55 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <meta name="theme-color" content="#101a22">
-  <meta name="description" content="軒轅劍網路版：崑崙秘境重製計畫">
-  <title>軒轅劍網路版｜崑崙秘境</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#27302e">
+  <title>軒轅劍網路版｜Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="src/styles.css">
 </head>
 <body>
-  <main id="game" class="game-shell">
-    <canvas id="world" aria-label="崑崙秘境遊戲場景"></canvas>
-    <div class="vignette"></div>
-    <div class="grain"></div>
+<main class="game-shell">
+  <canvas id="world" aria-label="軒轅劍網路版遊戲場景"></canvas>
+  <div class="scene-shade"></div>
 
-    <section id="title-screen" class="screen title-screen">
-      <div class="title-backdrop"></div>
-      <div class="title-brand">
-        <img src="assets/brand.svg" alt="軒轅劍網路版">
-        <p class="subtitle">CHAIN OF LIFE</p>
-        <p class="title-line">壺中世界 · 崑崙秘境</p>
-        <button id="enter-world" class="primary-button">踏入壺中世界 <span>›</span></button>
-        <div class="title-note">重返九藜大地　｜　滑鼠點擊移動・即時戰鬥</div>
-      </div>
-      <div class="title-footer"><span>一段關於相遇、羈絆與守護的旅程</span><span>REMASTERED WEB EDITION</span></div>
-    </section>
+  <section id="login-screen" class="legacy-screen">
+    <div class="login-plaque legacy-panel"><img class="login-logo" src="assets/brand.svg" alt="軒轅劍網路版"><div class="login-caption">軒轅劍網路版</div>
+      <form id="login-form"><label>帳號<input name="account" autocomplete="username" value="旅人"></label><label>密碼<input name="password" type="password" autocomplete="current-password" value="xuanyuan"></label><button class="legacy-button" type="submit">連線登入</button></form>
+      <div class="login-links"><button type="button" id="guest-login">訪客進入</button><span>版本 1.06　　繁體中文</span></div>
+    </div>
+    <div class="screen-version">軒轅劍網路版　｜　九藜大地</div>
+  </section>
 
-    <section id="character-screen" class="screen character-screen hidden">
-      <div class="character-heading"><div class="eyebrow">CREATE YOUR ADVENTURER</div><h1>選擇你的身影</h1><p>三族初臨崑崙，命運將由此展開</p></div>
-      <div class="race-cards">
-        <button class="race-card selected" data-race="人族"><span class="race-symbol">人</span><strong>人族</strong><small>均衡 · 守序而堅韌</small></button>
-        <button class="race-card" data-race="天人"><span class="race-symbol">天</span><strong>天人</strong><small>靈慧 · 通曉五行術法</small></button>
-        <button class="race-card" data-race="修羅"><span class="race-symbol">修</span><strong>修羅</strong><small>迅猛 · 力量與速度並存</small></button>
-      </div>
-      <div class="class-select"><span>初始修行</span><button class="class-choice active" data-class="劍客">劍客</button><button class="class-choice" data-class="藥師">藥師</button><button class="class-choice" data-class="陰陽師">陰陽師</button></div>
-      <button id="begin-adventure" class="primary-button">開始旅程 <span>›</span></button>
-      <button id="back-title" class="text-button">返回</button>
-    </section>
+  <section id="server-screen" class="legacy-screen hidden">
+    <div class="legacy-dialog legacy-panel"><div class="legacy-title">選擇伺服器 <small>SELECT SERVER</small></div><div class="server-columns"><div class="server-list"><button class="server-row active"><i></i><span>軒轅劍</span><small>正常</small></button><button class="server-row"><i></i><span>煉妖壺</span><small>正常</small></button><button class="server-row"><i></i><span>盤古斧</span><small>正常</small></button></div><div class="server-info"><strong id="server-name">軒轅劍</strong><p>九藜大地　・　和平繁盛</p><div class="server-load"><span>連線狀態</span><i><b></b></i></div></div></div><div class="dialog-actions"><button class="legacy-button secondary" id="server-back">返回</button><button class="legacy-button" id="server-next">確定</button></div></div>
+  </section>
 
-    <section id="hud" class="hud hidden" aria-label="遊戲介面">
-      <header class="top-hud">
-        <div class="player-card panel">
-          <div class="portrait-wrap"><img src="assets/hero-remaster.webp" alt="玩家角色"></div>
-          <div class="player-data"><div class="player-name"><span id="hero-name">無名旅人</span><span id="hero-class">劍客</span></div>
-            <div class="bar-row"><span class="bar-label">氣</span><div class="bar-track"><i id="hp-fill" class="hp-fill"></i></div><span id="hp-text">100 / 100</span></div>
-            <div class="bar-row"><span class="bar-label">法</span><div class="bar-track"><i id="mp-fill" class="mp-fill"></i></div><span id="mp-text">70 / 70</span></div>
-            <div class="bar-row exp-row"><span class="bar-label">經</span><div class="bar-track"><i id="xp-fill" class="xp-fill"></i></div><span id="level-text">Lv. 1</span></div>
-          </div>
-        </div>
-        <div class="target-card panel hidden" id="target-card"><div class="target-kicker">目前目標</div><strong id="target-name">山野精怪</strong><div class="bar-track target-track"><i id="target-fill"></i></div></div>
-        <div class="top-actions"><button id="audio-toggle" class="hud-button" title="音效開關">♫</button><button id="map-toggle" class="hud-button" title="地圖">地圖</button><button id="inventory-open" class="hud-button" title="背包">背包</button></div>
-      </header>
+  <section id="character-screen" class="legacy-screen hidden">
+    <div class="legacy-dialog character-dialog legacy-panel"><div class="legacy-title">選擇角色 <small>CHARACTER SELECT</small><span id="server-label">伺服器：軒轅劍</span></div><div class="character-slots"><button class="character-slot" id="slot-one"><span class="slot-silhouette">一</span><span class="slot-info"><b>角色欄位一</b><small>尚未建立角色</small></span></button><button class="character-slot" id="slot-two"><span class="slot-silhouette">二</span><span class="slot-info"><b>角色欄位二</b><small>尚未建立角色</small></span></button></div><div class="dialog-actions"><button class="legacy-button secondary" id="character-back">返回</button><button class="legacy-button secondary" id="create-character">建立人物</button><button class="legacy-button" id="enter-character" disabled>進入遊戲</button></div></div>
+  </section>
 
-      <aside class="quest-card panel"><div class="quest-title"><span class="quest-mark">卷</span><div><small>新手引導</small><strong id="quest-title">拜訪崑崙秘境</strong></div></div><p id="quest-description">與新生指導員對話，了解壺中世界。</p><div class="quest-progress" id="quest-progress">進度　0 / 1</div></aside>
+  <section id="creation-screen" class="legacy-screen hidden">
+    <div class="legacy-dialog creation-dialog legacy-panel"><div class="legacy-title">建立人物 <small>CREATE CHARACTER</small></div><div class="creation-body"><div class="creation-preview"><img src="assets/hero-classic.webp" alt="角色預覽"><div id="preview-class">劍客</div></div><div class="creation-fields"><label>角色名稱<input id="character-name" maxlength="12" value="新旅人"></label><div class="field-label">種族</div><div class="choice-row" id="race-choices"><button class="active" data-value="人族">人族</button><button data-value="天人">天人</button><button data-value="修羅">修羅</button></div><div class="field-label">性別與形象</div><div class="choice-row" id="body-choices"><button class="active" data-value="男">男</button><button data-value="女">女</button><button data-value="體型一">體型一</button><button data-value="體型二">體型二</button></div><label>職業<select id="class-select"></select></label><label>思想流派<select id="school-select"><option>儒家</option><option>道家</option><option>墨家</option><option>法家</option><option>兵家</option><option>陰陽家</option></select></label><div class="point-box"><span>初始能力配點</span><div id="stat-points"></div><small>剩餘點數：<b id="points-left">10</b></small></div></div></div><div class="dialog-actions"><button class="legacy-button secondary" id="creation-cancel">取消</button><button class="legacy-button" id="creation-confirm">完成建立</button></div></div>
+  </section>
 
-      <aside class="minimap panel"><div class="map-title"><span>崑崙秘境</span><small>東南 · 風和日麗</small></div><div class="map-window"><svg viewBox="0 0 180 118" aria-hidden="true"><path d="M0 0h180v118H0z" fill="#a4b7a2"/><path d="M0 20 48 0h70L96 26 59 41 31 77 0 81z" fill="#7e9a86"/><path d="m180 4-42 4-13 28 21 24-13 38 35 20h12z" fill="#6c8a79"/><path d="M12 99c34-34 49-9 76-40s52-31 78-45" fill="none" stroke="#d9c49d" stroke-width="10"/><path d="M12 99c34-34 49-9 76-40s52-31 78-45" fill="none" stroke="#f4e6c8" stroke-width="2"/><circle cx="90" cy="61" r="5" fill="#e8bd70" stroke="#fff0c9" stroke-width="2"/><circle cx="57" cy="55" r="4" fill="#d68f72"/><circle cx="126" cy="78" r="4" fill="#d68f72"/></svg><span class="map-player-dot"></span></div></aside>
+  <section id="hud" class="hud hidden" aria-label="遊戲介面">
+    <div class="left-skill-panel legacy-panel"><div class="skill-panel-title">技能</div><div id="skill-list"></div><div class="skill-page"><button id="page-prev">◀</button><span id="page-label">1 / 10</span><button id="page-next">▶</button></div></div>
 
-      <aside class="party-card panel"><div class="panel-heading">同行之人 <span>1 / 5</span></div><div class="party-member"><span class="party-dot"></span><strong id="party-name">無名旅人</strong><small>Lv.1</small></div><div class="party-empty">隊伍尚有空位</div></aside>
+    <div class="upper-right"><div class="minimap legacy-panel"><div class="panel-cap"><span>雷達地圖</span><button id="map-expand">□</button></div><div class="map-frame"><svg viewBox="0 0 180 116"><rect width="180" height="116" fill="#b4b27b"/><path d="M0 7 38 0 62 18 47 38 12 35zM108 0h72v27l-29 13-24-9zM0 78l35-16 28 11 2 43H0zM105 75l27-22 48 15v48h-65z" fill="#8a9664"/><path d="M-8 104c28-33 45-30 67-45s42-10 57-24 37-17 72-30" fill="none" stroke="#d6c78a" stroke-width="8"/><g fill="#d92bd6"><circle cx="25" cy="24" r="2.5"/><circle cx="41" cy="50" r="2.5"/><circle cx="63" cy="27" r="2.5"/><circle cx="74" cy="68" r="2.5"/><circle cx="88" cy="36" r="2.5"/><circle cx="101" cy="49" r="2.5"/><circle cx="119" cy="19" r="2.5"/><circle cx="135" cy="45" r="2.5"/><circle cx="151" cy="29" r="2.5"/><circle cx="159" cy="76" r="2.5"/><circle cx="120" cy="91" r="2.5"/><circle cx="77" cy="100" r="2.5"/><circle cx="34" cy="87" r="2.5"/></g><path d="m93 54 12 9-12 8z" fill="#175bd6" stroke="#e2e1c2" stroke-width="1"/></svg><span id="map-marker"></span></div><div class="map-coords">天人冒險區　　<span id="coords">239, 367</span></div></div>
+      <div class="player-status legacy-panel"><div class="status-top"><img src="assets/hero-classic.webp" alt=""><div><b id="player-name">新旅人</b><small id="player-job">人族・劍客　Lv 1</small></div><button id="status-toggle" title="角色狀態">狀態</button></div><div class="status-meter"><span>體力</span><div><i id="hp-fill"></i></div><small id="hp-value">100 / 100</small></div><div class="status-meter"><span>法力</span><div><i id="mp-fill"></i></div><small id="mp-value">70 / 70</small></div><div class="status-meter exp"><span>經驗</span><div><i id="xp-fill"></i></div><small id="level">Lv 1</small></div></div>
+      <div class="party-panel legacy-panel"><div class="panel-cap"><span>角色資訊</span><button id="party-toggle">狀態</button></div><div id="party-list"><div class="party-line"><i></i><span id="party-player">新旅人</span><small>職業　劍客</small></div><div class="classic-meta"><span>體力值　99 / 143</span><span>法力　63 / 173</span><span>攻擊力　30</span><span>防禦力　16</span><span>負重力　17 / 81</span></div><div class="classic-stats"><span>體力 <b>80</b></span><span>智慧 <b>90</b></span><span>魅力 <b>90</b></span><span>體質 <b>65</b></span><span>靈活 <b>65</b></span><span>運氣 <b>124</b></span><span>耐力 <b>70</b></span><span>敏捷 <b>65</b></span></div><div class="element-stats"><span>火　5</span><span>水　5</span><span>風　12</span><span>雷　18</span><span>陰　5</span><span>陽　20</span></div><div class="classic-level">等級　<b>4</b>　　下次升級 ▰▰▱▱</div></div></div>
+    </div>
 
-      <div class="interaction-hint hidden" id="interaction-hint">點擊 <kbd>E</kbd> 與人物交談</div>
-      <div class="dialogue panel hidden" id="dialogue"><div class="dialogue-header"><span id="dialogue-speaker">新生指導員</span><button id="dialogue-close" aria-label="關閉">×</button></div><p id="dialogue-text"></p><button id="dialogue-next" class="dialogue-next">繼續 <span>›</span></button></div>
+    <div id="target-panel" class="target-panel legacy-panel hidden"><div id="target-name">目標</div><div class="target-meter"><i id="target-fill"></i></div><span id="target-hp"></span></div>
 
-      <div class="bottom-hud">
-        <div class="chat panel"><div class="chat-tabs"><button class="active">附近</button><button>隊伍</button><button>系統</button></div><div class="chat-log" id="chat-log"><p><b class="chat-system">系統</b>　歡迎來到崑崙秘境。</p><p><b>指導員</b>　旅人，壺中世界正等著你的到來。</p></div><form id="chat-form"><span>›</span><input id="chat-input" autocomplete="off" placeholder="輸入訊息…"><button>送出</button></form></div>
-        <div class="action-dock"><div class="dock-top"><span id="location-name">崑崙秘境</span><span class="coords" id="coords">座標 240, 180</span><button class="small-icon" id="run-toggle" title="跑步 (R)">跑</button></div><div class="hotbar" id="hotbar"></div><div class="hotbar-caption"><span>快捷列　1–8　｜　Q 攻擊　｜　R 跑步</span><span>頁 1 / 10</span></div></div>
-      </div>
+    <div class="left-bottom-buttons legacy-panel"><button data-window="status">人物</button><button data-window="equipment">裝備</button><button data-window="inventory">物品</button><button data-window="skills">法術</button><button data-window="actions">動作</button></div>
 
-      <div id="modal" class="modal hidden"><div class="modal-card panel"><button id="modal-close" class="modal-close">×</button><div id="modal-content"></div></div></div>
-      <div id="toast" class="toast"></div>
-    </section>
-  </main>
-  <script src="src/game.js"></script>
-</body>
-</html>
+    <div class="chat-panel legacy-panel"><div class="chat-tabs"><button class="active">一般</button><button>隊伍</button><button>公會</button><button>密語</button></div><div class="chat-log" id="chat-log"><p><b>[系統]</b> 已連線。</p><p><b>[狂猿水擊]</b> 你在幹嘛</p></div><form id="chat-form"><select id="chat-channel"><option>附近</option><option>隊伍</option><option>公會</option><option>密語</option></select><input id="chat-input" autocomplete="off"><button>送出</button></form></div>
+
+    <div class="bottom-controls"><div class="world-label"><span id="zone-name">天人冒險區</span><span id="action-state">待機中</span><button id="run-toggle">走路</button><button id="audio-toggle">音效 ON</button></div><div class="quick-menu legacy-panel"><button data-window="status"><i>人</i><span>人物</span></button><button data-window="equipment"><i>裝</i><span>裝備</span></button><button data-window="inventory"><i>物</i><span>物品</span></button><button data-window="skills"><i>法</i><span>法術</span></button><button data-window="party"><i>隊</i><span>隊伍</span></button><button data-window="friends"><i>友</i><span>好友</span></button><button data-window="system"><i>設</i><span>系統</span></button></div><div class="controls-help">滑鼠點地移動　｜　點選目標　｜　Q 攻擊　｜　R 走／跑　｜　Tab 地圖</div></div>
+
+    <div id="window-modal" class="window-modal hidden"><div class="window-card legacy-panel"><button class="window-close" id="window-close">×</button><div id="window-content"></div></div></div>
+    <div class="combat-float" id="combat-float"></div><div id="toast" class="toast"></div>
+  </section>
+</main><script src="src/game.js"></script>
+</body></html>
