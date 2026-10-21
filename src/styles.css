@@ -17,3 +17,19 @@ html,body{background:#111710}body{display:grid;place-items:center}.game-shell{wi
 @media(max-width:800px){.party-panel{display:block!important}.quick-menu{display:flex!important}.upper-right{width:24%}.status-top button{display:none}}
 
 .quick-menu span{display:none!important}.quick-menu button{height:clamp(37px,6vw,50px)}.status-top>div{display:grid}.status-top img,.status-top button{display:none!important}
+
+/* Login title screen rebuilt from the supplied original 4:3 reference. */
+#login-screen{display:block;overflow:hidden;background:#d9f0e9 url("../assets/login-scene.svg") center/100% 100% no-repeat}
+#login-screen::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#eafff02b 0%,transparent 45%,#063e3b18 100%)}
+#login-screen .login-brand{position:absolute;z-index:1;top:4%;left:50%;transform:translateX(-50%);width:clamp(125px,22%,245px);height:46%;display:grid;place-items:center}
+#login-screen .login-brand img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 5px #0c655455)}
+#login-screen .login-plaque{position:absolute;z-index:2;right:4.5%;bottom:12%;width:min(290px,43%);padding:12px 15px 10px;text-align:center;background:linear-gradient(145deg,#effbf0d9,#d6eee5d9);border:1px solid #72aaa0;outline:1px solid #f2fff1aa;box-shadow:0 4px 18px #17544b30,inset 0 1px #fff}
+#login-screen .login-caption{margin:0 0 9px;color:#25665d;font:600 12px 'Noto Serif TC',serif;letter-spacing:.2em;text-shadow:0 1px #fff}
+#login-screen .login-plaque form{gap:6px}
+#login-screen .login-plaque label{gap:7px;color:#285d57;font-size:10px}
+#login-screen .login-plaque input{padding:5px 7px;color:#234d49;background:#f5fffae8;border:1px solid #8ab7a9;box-shadow:inset 0 1px 2px #33675a1c;font-size:10px}
+#login-screen .login-plaque .legacy-button{margin:3px auto 0;padding:6px 17px;border:1px solid #4f9381;background:linear-gradient(#9bcab0,#4f8d7b);color:#f5fff1;text-shadow:0 1px 2px #14554b;box-shadow:inset 0 1px #e8fff2,0 2px 3px #144a3c40}
+#login-screen .login-links{margin-top:8px;color:#47756e;font-size:8px}
+#login-screen .login-links button{color:#2e766a;font-size:9px}
+#login-screen .screen-version{z-index:1;right:2.5%;bottom:2%;color:#34786e;font:8px 'Noto Sans TC',sans-serif;letter-spacing:.08em;text-shadow:0 1px #eafff2}
+@media(max-width:650px){#login-screen .login-brand{top:2%;height:43%;width:clamp(115px,28%,190px)}#login-screen .login-plaque{right:4%;bottom:11%;width:min(260px,58%);padding:9px 11px 8px}}

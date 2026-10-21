@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360">
+<defs><linearGradient id="jade" x2="0" y2="1"><stop stop-color="#70c9b6"/><stop offset=".48" stop-color="#137d73"/><stop offset="1" stop-color="#07534f"/></linearGradient><filter id="shadow" x="-30%" y="-20%" width="160%" height="150%"><feGaussianBlur stdDeviation="3"/></filter></defs>
+<g fill="none" stroke="#f3fff2" stroke-opacity=".82" stroke-width="3">
+<path d="M26 113c45-51 93-58 144-22 43 31 87 27 132-9M45 137c41-31 79-34 119-6 47 33 91 33 147-4M70 75c30-31 62-34 91-8"/>
+<path d="M63 210c44-20 77-16 112 12 42 34 78 34 120 6"/>
+</g>
+<text x="185" y="127" text-anchor="middle" font-family="Noto Serif TC,serif" font-size="82" font-weight="700" fill="#064e49" opacity=".28" filter="url(#shadow)">軒</text>
+<text x="185" y="123" text-anchor="middle" font-family="Noto Serif TC,serif" font-size="82" font-weight="700" fill="url(#jade)" stroke="#e9fff2" stroke-width="2" paint-order="stroke">軒</text>
+<text x="178" y="202" text-anchor="middle" font-family="Noto Serif TC,serif" font-size="76" font-weight="700" fill="#064e49" opacity=".28" filter="url(#shadow)">轅</text>
+<text x="178" y="198" text-anchor="middle" font-family="Noto Serif TC,serif" font-size="76" font-weight="700" fill="url(#jade)" stroke="#e9fff2" stroke-width="2" paint-order="stroke">轅</text>
+<text x="190" y="271" text-anchor="middle" font-family="Noto Serif TC,serif" font-size="72" font-weight="700" fill="#064e49" opacity=".28" filter="url(#shadow)">劍</text>
+<text x="190" y="267" text-anchor="middle" font-family="Noto Serif TC,serif" font-size="72" font-weight="700" fill="url(#jade)" stroke="#e9fff2" stroke-width="2" paint-order="stroke">劍</text>
+<path d="M70 292h220" stroke="#c39235" stroke-width="3"/><path d="m171 284 12 8-12 8-12-8z" fill="#d6a33d"/>
+<text x="180" y="329" text-anchor="middle" font-family="serif" font-size="19" letter-spacing="8" fill="#0f736a">ONLINE</text>
+</svg>

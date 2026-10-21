@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 960" preserveAspectRatio="none">
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#e9faf4"/><stop offset=".52" stop-color="#c9eee5"/><stop offset="1" stop-color="#72c8b7"/></linearGradient>
+ <radialGradient id="sun"><stop stop-color="#fffef3" stop-opacity=".95"/><stop offset=".48" stop-color="#effff4" stop-opacity=".55"/><stop offset="1" stop-color="#e1f8ef" stop-opacity="0"/></radialGradient>
+ <linearGradient id="mount" x2="0" y2="1"><stop stop-color="#72cbbb"/><stop offset="1" stop-color="#268f84"/></linearGradient>
+ <linearGradient id="dark" x2="0" y2="1"><stop stop-color="#4bb2a1"/><stop offset="1" stop-color="#146b69"/></linearGradient>
+ <linearGradient id="water" x2="0" y2="1"><stop stop-color="#90dacc" stop-opacity=".18"/><stop offset="1" stop-color="#287c78" stop-opacity=".4"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="16"/></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+ <pattern id="grain" width="42" height="42" patternUnits="userSpaceOnUse"><circle cx="3" cy="7" r="1" fill="#fff" opacity=".35"/><circle cx="27" cy="23" r=".8" fill="#439d90" opacity=".12"/><path d="M8 37h9" stroke="#fff" opacity=".18"/></pattern>
+</defs>
+<rect width="1280" height="960" fill="url(#sky)"/><ellipse cx="780" cy="335" rx="480" ry="360" fill="url(#sun)"/>
+<g fill="#fff" opacity=".58" filter="url(#blur)"><ellipse cx="195" cy="255" rx="270" ry="78"/><ellipse cx="940" cy="212" rx="290" ry="72"/><ellipse cx="600" cy="475" rx="450" ry="55"/><ellipse cx="1120" cy="526" rx="250" ry="74"/></g>
+<g fill="none" stroke="#6bbcae" stroke-opacity=".17" stroke-width="3">
+<path d="M10 70c60-44 110-42 154 0s91 47 130 3 74-46 116-10 72 40 113 7"/>
+<path d="M1015 36c52 38 92 39 135 4s81-43 122-12"/><path d="M1034 64c45 27 80 28 115 1s68-33 105-9"/>
+<path d="M28 176c35-33 68-31 99 4s58 35 88 4 60-35 91-2"/>
+</g>
+<!-- distant cloud sea -->
+<path d="M0 572c96-36 145-54 239-26s145 5 222-23 144-22 218 8 153 30 228-9 144-47 219-13 113 18 154 4v447H0Z" fill="#e9fbf2" opacity=".7"/>
+<path d="M0 619c123-38 188-34 280-5s150 31 240-7 157-25 246 8 176 31 269-5 163-43 245-17v367H0Z" fill="url(#water)"/>
+<g fill="#7acabb" opacity=".48">
+<path d="M0 541 80 452l42 35 62-99 56 82 65-123 78 134 57-72 85 118 83-68 67 81z"/>
+<path d="M440 554 522 454l40 44 71-118 57 94 53-67 78 106 61-57 77 85z"/>
+<path d="M855 556 931 430l51 55 62-104 66 117 55-65 88 126z"/>
+</g>
+<!-- far floating sanctuary -->
+<g opacity=".7" fill="#5cb8aa">
+<path d="M731 476h155l34 22H702z"/><path d="M750 460h116v18H750z"/>
+<path d="M764 442h18v20h-18zm37-14h18v34h-18zm37 8h18v26h-18z"/>
+<path d="m742 443 31-25 30 24zm47-16 21-24 23 25z"/>
+<path d="M706 498c57 13 144 12 220-2l-46 26c-50 16-108 16-161 0z"/>
+</g>
+<!-- main floating mountain, characteristic long island on the left -->
+<path d="M0 657c63-23 92-57 146-50 35 5 51-57 96-67 51-12 79 33 120 39 41 6 60-35 108-27 36 6 62 45 101 50 54 8 80-32 138-27 64 6 91 41 144 37 48-4 63-34 114-27 48 7 75 32 125 26 67-8 98-32 188-6v207H0Z" fill="url(#mount)"/>
+<path d="M0 658c64-23 92-57 146-50 35 5 51-57 96-67 25-6 46 0 66 11-39 4-64 37-89 63-41 43-78 58-130 60-39 2-65 5-89 16z" fill="#b0e8dc" opacity=".75"/>
+<path d="M86 664c64-46 104-38 160-68 34-18 55-52 92-48 45 5 65 52 108 57 41 5 65-29 109-20-60 24-90 57-148 65-57 9-99-7-146 22-55 34-103 42-175 23z" fill="#e6fbef" opacity=".44"/>
+<!-- jade city on the left slope -->
+<g fill="#e3faf0" opacity=".88" stroke="#2d9388" stroke-width="2">
+<path d="M0 630h38v27H0zm46-19h34v37H46zm41 11h26v28H87zm42-29h34v58h-34zm42 20h35v39h-35zm42-18h28v53h-28zm37 23h34v31h-34z"/>
+<path d="m-4 631 20-21 20 21m9-20 17-20 17 20m40-16 18-22 18 22m37 18 16-20 19 20m37 4 17-19 17 19"/>
+<path d="M10 638h6v19h-6zm52-5h5v23h-5zm81-20h5v39h-5zm45 26h5v20h-5zm45-7h5v27h-5z"/>
+</g>
+<!-- foreground mountain and sweeping cloud bridge -->
+<path d="M0 768c90-59 151-66 223-47 84 22 132 18 197-12 78-37 153-16 219 17 75 38 126 44 196 13 69-30 144-19 205 13 91 48 154 30 240-10v218H0Z" fill="url(#dark)"/>
+<path d="M0 787c118-56 183-62 251-35 70 27 137 21 214-12 72-31 124-18 190 16 72 37 149 41 217 10 75-35 136-22 206 10 86 40 136 30 202 5v179H0Z" fill="#126c6c" opacity=".54"/>
+<path d="M0 711c173 55 313 80 463 49s286-56 436-15 258 49 381-1" fill="none" stroke="#d6fff0" stroke-width="14" stroke-opacity=".53"/>
+<path d="M0 729c163 46 305 66 451 39s299-46 451-8 265 46 378-2" fill="none" stroke="#f1fff0" stroke-width="4" stroke-opacity=".72"/>
+<!-- nearer palace platform -->
+<g fill="#e7fbef" stroke="#23877e" stroke-width="3">
+<path d="M647 746h266v22H647z"/><path d="M675 709h211v34H675z"/><path d="M707 681h148v30H707z"/>
+<path d="M693 711v35h11v-35zm47 0v35h11v-35zm76 0v35h11v-35zm48 0v35h11v-35z"/>
+<path d="m663 709 116-57 116 57z"/><path d="m700 681 80-51 81 51z"/><path d="m729 652 52-40 52 40z"/>
+<path d="M769 612h24v41h-24z"/><path d="m755 614 26-34 27 34z"/>
+<path d="M626 768c99 35 207 43 311 0l-62 47c-58 24-135 23-195 0z"/>
+</g>
+<g fill="#329b8c"><path d="M780 593v25h3v-25z"/><path d="M668 720h10v8h-10zm92 0h10v8h-10zm96 0h10v8h-10z"/></g>
+<!-- etched mist ribbons -->
+<g fill="none" stroke="#effff4" stroke-width="7" opacity=".56">
+<path d="M-30 834c143-37 203-29 327 4s210 29 315-4 193-31 304 4 221 35 394-13"/>
+<path d="M-50 871c150-30 237-18 337 10s213 29 313 0 203-25 307 4 236 23 393-15"/>
+<path d="M290 541c64-33 126-37 187-8m390-43c58-25 107-25 160-5"/>
+</g>
+<!-- fine border and paper patina -->
+<rect x="13" y="13" width="1254" height="934" rx="15" fill="none" stroke="#f8fff5" stroke-width="9" opacity=".8"/>
+<rect x="22" y="22" width="1236" height="916" rx="11" fill="none" stroke="#5aa99c" stroke-width="2" opacity=".42"/>
+<rect width="1280" height="960" fill="url(#grain)"/>
+</svg>
