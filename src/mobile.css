@@ -29,3 +29,8 @@
 #mobile-controller .mobile-actions button:active{filter:brightness(1.4);transform:scale(.93)}
 #mobile-controller #joy{bottom:max(8%,env(safe-area-inset-bottom, 0px))}
 }
+
+#world3d{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;display:none}
+#objective3d{position:absolute;left:50%;top:10px;transform:translateX(-50%);z-index:5;display:none;flex-direction:column;gap:2px;align-items:center;background:#132b25dd;border:1px solid #c4a976aa;border-radius:6px;padding:5px 12px;color:#f5e5bb;font:12px "Noto Sans TC",sans-serif;pointer-events:none}
+#objective3d span{color:white}#objective3d small{font-size:9px;color:#e5c6a0}
+@media(pointer:coarse),(max-width:900px){#quest-guide{display:none!important}#objective3d{top:5px;left:50%;max-width:37%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#objective3d small{display:none}}
