@@ -4,9 +4,9 @@
   const canvas=$('#world'), ctx=canvas.getContext('2d',{alpha:false});
   const screens={login:$('#login'),select:$('#character-select'),create:$('#create-screen'),ui:$('#game-ui')};
   const images={
-    kunlun:new Image(),forest:new Image(),rage:new Image(),hero:new Image(),monkey:new Image()
+    kunlun:new Image(),forest:new Image(),harbor:new Image(),rage:new Image(),volcano:new Image(),hero:new Image(),monkey:new Image()
   };
-  images.kunlun.src='game-assets/kunlun-field-remaster.webp'; images.forest.src='game-assets/mist-forest-remaster.webp'; images.rage.src='game-assets/rage-mountain-remaster.webp'; images.hero.src='game-assets/hero-classic-remaster.webp'; images.monkey.src='game-assets/monkey-remaster-v2.webp';
+  images.kunlun.src='game-assets/kunlun-field-remaster.webp'; images.forest.src='game-assets/mist-forest-remaster.webp'; images.harbor.src='game-assets/harbor-remaster.webp'; images.rage.src='game-assets/rage-mountain-remaster.webp'; images.volcano.src='game-assets/volcano-remaster.webp'; images.hero.src='game-assets/hero-classic-remaster.webp'; images.monkey.src='game-assets/monkey-remaster-v2.webp';
   const jobs={
     '劍客':{races:['人類'],desc:'近戰物理輸出，擅長劍類武器與高爆發單體連擊。',skills:['劍氣','連斬','破甲擊','疾風步','劍影','旋風斬','御劍','劍心通明']},
     '刀客':{races:['人類'],desc:'高防禦近戰，善於牽制敵人並守護隊友。',skills:['挑釁','鐵壁','橫掃','震懾','護身刀勢','裂甲斬','不動如山','守心']},
@@ -19,14 +19,15 @@
   };
   const raceDescriptions={人類:'能力均衡，可修習劍術、刀法、刺殺、五行法術與醫術。',修羅:'體魄強悍、野性十足，擅長魔刀與修羅醫術。',仙靈:'靈性極高，專精符咒、封印與五行召喚。'};
   const zones=[
-    {name:'廣靈鎮',level:'安全區',bg:'kunlun',monsters:[]},
-    {name:'凌水港',level:'Lv. 1–8',bg:'kunlun',monsters:['水鬼','軟泥怪','蝙蝠','野狗','金狼']},
+    {name:'廣靈鎮',level:'安全區',bg:'harbor',monsters:[]},
+    {name:'凌水港',level:'Lv. 1–8',bg:'harbor',monsters:['水鬼','軟泥怪','蝙蝠','野狗','金狼']},
     {name:'迷霧森林',level:'Lv. 4–12',bg:'forest',monsters:['野狗','青蛇','軟泥怪','水鬼']},
     {name:'陰淮平原',level:'Lv. 6–15',bg:'kunlun',monsters:['青蛇','金狼','蝙蝠','野狗']},
     {name:'崑崙山',level:'Lv. 15–25',bg:'kunlun',monsters:['飛蛇','化蛇','猿猴','飛鷹','野狼','黑熊']},
     {name:'巨石林',level:'Lv. 20–25',bg:'kunlun',monsters:['巨石猴','幽魂']},
     {name:'長城平原',level:'Lv. 25–40',bg:'forest',monsters:['吸血蝙蝠','蘭花仙子','溫泉蛋']},
     {name:'赤壁沙漠',level:'Lv. 40+',bg:'rage',monsters:['沙蛇','猿精','吸血鬼']},
+    {name:'怒火山',level:'Lv. 35+',bg:'volcano',monsters:['火妖','山魈','蚩尤分身']},
     {name:'九曲結界',level:'高等探索',bg:'rage',monsters:['五行妖魔','結界守衛']},
     {name:'龍棲山',level:'高等探索',bg:'kunlun',monsters:['山魈','飛蛇','妖狐']},
     {name:'靜咫鎮（灰白）',level:'詛咒謎境',bg:'forest',monsters:['石化居民','怨靈']},
@@ -47,7 +48,7 @@
   const baseSkills={
     '劍客':['劍氣','連斬','破甲擊','疾風步','劍影','旋風斬','御劍','劍心通明'],'陰陽師':['五雷咒','火龍咒','風刃','冰封','土靈盾','天雷破','五行輪轉','陰陽合一'],'藥師':['回春術','清心咒','護體靈光','甘露','復生術','靈泉','祝福','普渡眾生']
   };
-  const fresh=()=>({name:'軒轅旅人',race:'人類',job:'劍客',gender:'男',level:1,xp:0,xpNext:100,hp:120,maxHp:120,mp:80,maxMp:80,stats:{體力:12,智慧:12,魅力:12,體質:12,靈活:12,運氣:12,耐力:12,敏捷:12},zone:2,coords:{x:142,y:87},sitting:false,running:false,skills:{},bindings:{},titles:[],activeTitle:'初入江湖',inventory:['短劍','青鋼長劍','粗布衣','藤甲','護腕','布鞋','藥草','藥草','麻布包裹','招魂號角'],equipment:{武器:'短劍',身體:'粗布衣',法寶:'軒轅劍碎片'},bagSlots:8,artifact:{name:'軒轅劍碎片',level:1,xp:0},quests:[{id:'start',name:'港口的異聲',text:'前往凌水港外，擊退 3 隻水鬼或軟泥怪。',progress:0,need:3,done:false},{id:'true-love',name:'亂世真情',text:'追尋胡忠賢與桑文錦的命運，獲得長久流傳的稱號。',progress:0,need:3,done:false}],dead:false,corpse:false,page:0,chat:[]});
+  const fresh=()=>({name:'軒轅旅人',race:'人類',job:'劍客',gender:'男',level:1,xp:0,xpNext:100,hp:120,maxHp:120,mp:80,maxMp:80,stats:{體力:12,智慧:12,魅力:12,體質:12,靈活:12,運氣:12,耐力:12,敏捷:12},zone:1,coords:{x:142,y:87},sitting:false,running:false,skills:{},bindings:{},titles:[],activeTitle:'初入江湖',inventory:['短劍','青鋼長劍','粗布衣','藤甲','護腕','布鞋','藥草','藥草','麻布包裹','招魂號角'],equipment:{武器:'短劍',身體:'粗布衣',法寶:'軒轅劍碎片'},bagSlots:8,artifact:{name:'軒轅劍碎片',level:1,xp:0},quests:[{id:'start',name:'港口的異聲',text:'前往凌水港外，擊退 3 隻水鬼或軟泥怪。',progress:0,need:3,done:false},{id:'true-love',name:'亂世真情',text:'追尋胡忠賢與桑文錦的命運，獲得長久流傳的稱號。',progress:0,need:3,done:false}],dead:false,corpse:false,page:0,chat:[]});
   let savedPlayer; try{savedPlayer=JSON.parse(localStorage.getItem('sword-online-remaster-v2')||'null')}catch{}
   let player=savedPlayer&&savedPlayer.name?{...fresh(),...savedPlayer,race:savedPlayer.race==='天人'?'仙靈':savedPlayer.race,job:savedPlayer.job==='修羅醫師'?'修羅醫':savedPlayer.job==='祭符師'?'符師':savedPlayer.job==='武術家'?'刀客':savedPlayer.job,stats:{...fresh().stats,...savedPlayer.stats}}:fresh();
   let state={screen:'login',zone:null,target:null,enemy:null,attackAt:0,anim:0,keys:{},mouseDown:false,drag:false,prevMouse:null,particles:[],floaters:[],camera:0,zoom:1,autoRun:false,muted:true,music:null,lastTick:performance.now(),chatTab:'附近',page:player.page||0,revision:0,position:{x:.46,y:.64},moveTarget:null};
