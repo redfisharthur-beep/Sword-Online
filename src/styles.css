@@ -9,3 +9,13 @@
 .combat-log{padding:8px 8px 6px;display:flex;flex-direction:column;justify-content:flex-end}#combat-lines{overflow:hidden;max-height:94px;flex:1;display:flex;flex-direction:column;justify-content:flex-end}#chat-form{display:flex;gap:4px;margin-top:5px}#chat-form select,#chat-form input{min-width:0;border:1px solid #81734a;background:#151b17;color:#ddd2b3;font-size:9px;height:23px}#chat-form select{width:48px;padding:0 2px}#chat-form input{flex:1;padding:0 6px}#chat-form button{border:1px solid #9c8754;background:#343b30;color:#dfd1a7;font-size:9px;padding:0 7px}
 body{display:grid;place-items:center;background:radial-gradient(ellipse at center,#253128,#0b100d 78%)}.game-shell{width:min(100vw,133.333vh);height:min(100vh,75vw)}
 @media(max-width:700px){.game-shell{width:100vw;height:100vh}}
+/* Classic 軒網 palette and beveled green-gold window trim. */
+:root{--gold:#c9d3a2;--gold2:#77936a;--ink:#17251d;--pane:rgba(23,43,33,.88);--line:#71906d;--cream:#e3e7cc;--muted:#b1c0a1}
+.panel,.plaque{border:1px solid #9db58b;outline:1px solid #334d39;box-shadow:0 2px 2px #07110c,0 0 0 2px #5c7859,0 6px 18px #0009,inset 0 1px 0 #e4edc488;background:linear-gradient(145deg,rgba(46,75,55,.94),rgba(18,38,30,.94));backdrop-filter:blur(3px)}
+.bevel,.tool,.buff,.skill-slot,.mini-actions button,.choice,.job-choice{border-color:#8da887;background:linear-gradient(#587958,#294736);color:#e2e9ca}
+.bevel.primary{background:linear-gradient(#aab98b,#58724e);border-color:#d7dfb3;color:#f8f2d2}
+.vignette{background:linear-gradient(180deg,#06150b29,transparent 28%,transparent 67%,#06150bab)}
+.bar{border-color:#9fb48a}.bar.hp i{background:linear-gradient(#da6956,#9e3029)}.bar.mp i{background:linear-gradient(#72c2dc,#26719c)}
+.radar-map{border-color:#a6b98e;background-image:linear-gradient(40deg,transparent 46%,#c4d09b77 47%,#c4d09b77 48%,transparent 49%),linear-gradient(-20deg,transparent 59%,#b6cf92aa 60%,#b6cf92aa 61%,transparent 62%),radial-gradient(ellipse,#91a978,#566c4b)}
+.window-body .quest,.quest{border-color:#748d68;background:#1c3027}.game-window>header,.create-card>header{color:#e1e7c3}
+@media(max-width:700px){.skill-slot{width:35px}.left-hotbar{max-width:calc(100vw - 16px);overflow-x:auto}}
