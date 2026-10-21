@@ -19,3 +19,21 @@ body{display:grid;place-items:center;background:radial-gradient(ellipse at cente
 .radar-map{border-color:#a6b98e;background-image:linear-gradient(40deg,transparent 46%,#c4d09b77 47%,#c4d09b77 48%,transparent 49%),linear-gradient(-20deg,transparent 59%,#b6cf92aa 60%,#b6cf92aa 61%,transparent 62%),radial-gradient(ellipse,#91a978,#566c4b)}
 .window-body .quest,.quest{border-color:#748d68;background:#1c3027}.game-window>header,.create-card>header{color:#e1e7c3}
 @media(max-width:700px){.skill-slot{width:35px}.left-hotbar{max-width:calc(100vw - 16px);overflow-x:auto}}
+/* Jade title screen, using local artwork so startup also works offline. */
+:root{font-family:'Noto Sans TC','Microsoft JhengHei',sans-serif}
+.login-screen{background:#c8eee3 url('../game-assets/login-jade-remaster.png') center/cover no-repeat}
+.login-screen::after{content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 35px 14px #72cbbb90,inset 0 0 9px 4px #fff9}
+.login-crest{left:50%;top:5%;transform:translateX(-50%);align-items:center;color:#236e64;text-shadow:0 1px 1px #fff;z-index:1}
+.login-crest img{width:clamp(145px,20vw,245px);height:auto;filter:drop-shadow(0 3px 2px #fff9)}
+.login-crest small{font-size:12px;letter-spacing:.3em;margin-top:8px;white-space:nowrap}
+.login-box{right:7%;top:auto;bottom:8%;width:300px;padding:20px 25px 12px;background:linear-gradient(135deg,#f5fff6eb,#cee6d8e8);border-color:#71a393;outline-color:#a6cec1;box-shadow:0 8px 30px #186e6533,inset 0 0 18px #fff9;color:#28574d;z-index:2}
+.login-box h1{font-family:'Noto Serif TC','PMingLiU',serif;font-size:22px;color:#286b5f}
+.login-box p,.login-box label,.login-box .text-button{color:#40796a}.login-box p{margin-bottom:12px}
+.login-box input{background:#f5fff8;border-color:#94b6a3;color:#254d43}.login-foot{color:#577b6d;border-color:#72a99255;line-height:1.6}
+.login-box .bevel.primary{background:linear-gradient(#729e87,#386858);color:#f3f9e5;border-color:#a8c8b3}
+.version{z-index:2;color:#326d61;font-size:11px}
+.world-services{position:absolute;left:14px;top:78px;display:flex;align-items:center;gap:7px;padding:5px 8px;font-size:10px;pointer-events:auto}
+.world-services button{border:1px solid #8ca77d;background:#304f3c;padding:4px 7px;color:#e2e9ca}.world-services span{color:#d7c785}.left-icons{top:135px}
+.shop-row{display:grid;grid-template-columns:1fr 80px 70px;align-items:center;border-bottom:1px solid #80976744;padding:8px 0}
+@media(min-width:701px){.left-hotbar{bottom:88px;height:42px;gap:2px;padding:4px}.left-hotbar .tool{width:32px}.combat-log{bottom:143px}.skillbar-wrap{bottom:12px}.help-strip{bottom:84px}}
+@media(max-width:700px){.login-crest{left:50%;top:6%}.login-crest img{width:160px}.login-box{right:50%;transform:translateX(50%);bottom:7%;width:min(310px,86vw)}.world-services{left:8px;top:70px;max-width:75vw;gap:4px}.world-services button{font-size:10px}.left-icons{top:120px}.left-hotbar{bottom:8px;max-width:62vw;height:42px}.left-hotbar .tool{min-width:26px;width:26px;font-size:10px}.skillbar-wrap{bottom:62px;left:50%;transform:translateX(-50%) scale(.85)}.character-stats{display:none}.combat-log{width:62vw;bottom:130px;height:100px}.help-strip{display:none}.mini-actions{bottom:8px}.top-right{width:220px;transform:scale(.72)}.identity{min-width:180px;transform:scale(.75)}.target{top:160px;width:170px}.create-card{max-height:94vh;overflow:auto}.create-columns{grid-template-columns:100px 1fr;gap:10px}.creation-figure img{height:170px}.creation-figure{height:155px}.job-grid{grid-template-columns:repeat(2,1fr)}.create-card footer{gap:10px}.create-card footer span{display:none}}

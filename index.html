@@ -4,8 +4,6 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <meta name="theme-color" content="#1c241d"><meta name="description" content="軒轅劍網路版：以經典介面、世界地圖與職業系統為基礎的高解析瀏覽器重製原型。">
   <title>軒轅劍網路版・重製計畫</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="src/styles.css">
 </head>
 <body>
@@ -13,12 +11,12 @@
   <canvas id="world" aria-label="軒轅劍網路版遊戲場景"></canvas>
   <div class="vignette"></div>
   <section id="login" class="screen login-screen">
-    <div class="login-crest"><span>軒轅劍</span><small>ONLINE · 逍遙遊</small></div>
+    <div class="login-crest"><img src="assets/login-brand.svg" alt="軒轅劍 Online"><small>山海依舊・故人歸來</small></div>
     <div class="login-box panel">
       <h1>軒轅劍網路版</h1><p>山海洪荒・再續前緣</p>
-      <form id="login-form"><label>帳號<input name="account" value="旅人" autocomplete="username"></label><label>密碼<input name="password" type="password" value="xuanyuan" autocomplete="current-password"></label><button class="bevel primary" type="submit">連線登入</button></form>
-      <button id="guest-login" class="text-button">訪客登入　・　開始旅程</button><div class="login-foot">繁體中文版　｜　經典伺服器：軒轅</div>
-    </div><div class="version">Remaster Preview · 0.2.0</div>
+      <form id="login-form"><label>旅人暱稱<input name="account" value="旅人" maxlength="12" autocomplete="nickname"></label><button class="bevel primary" type="submit">啟程</button></form>
+      <button id="guest-login" class="text-button">訪客登入　・　開始旅程</button><div class="login-foot">繁體中文版　｜　單機重製版・進度儲存於此裝置</div>
+    </div><div class="version">Remaster · 0.3.0</div>
   </section>
   <section id="character-select" class="screen character-screen hidden">
     <div class="select-card panel"><div class="select-head"><span>人物選擇</span><span class="seal">軒</span></div><div class="character-preview"><img src="game-assets/hero-classic-remaster.webp" alt="劍客角色預覽"></div><div class="character-info"><strong id="select-name">軒轅旅人</strong><span id="select-meta">人類　劍客　Lv. 1</span><span class="muted">廣靈鎮・新手旅程</span></div><button id="enter-world" class="bevel primary">進入遊戲</button><button id="new-character" class="bevel">建立人物</button></div>
@@ -36,7 +34,7 @@
       <div class="party plaque"><div class="party-title">隊伍 <span>1 / 5</span></div><div class="party-member"><i class="party-dot"></i><span id="party-name">軒轅旅人</span><i class="party-hp"><b id="party-fill"></b></i></div><div class="party-member companion"><i class="party-dot"></i><span>同行俠士</span><i class="party-hp"><b style="width:74%"></b></i></div></div>
       <div class="radar plaque" id="radar"><div class="radar-title"><span id="radar-zone">凌水港</span><button id="map-button" title="展開地圖（Tab）">◎</button></div><div class="radar-map"><span class="radar-path"></span><i class="radar-player">▲</i><i class="radar-enemy">●</i><small id="coords">X: 142　Y: 087</small></div></div>
     </div>
-    <div class="left-icons"><button class="buff" data-window="status" title="狀態">體</button><button class="buff" data-window="skills" title="武學">武</button><button class="buff" data-window="quests" title="任務">令</button><button class="buff" data-window="inventory" title="法寶">寶</button></div>
+    <div class="world-services plaque"><button data-window="guide">港口嚮導</button><button data-window="shop">雜貨舖</button><span>軒轅幣 <b id="gold-value">100</b></span></div><div class="left-icons"><button class="buff" data-window="status" title="狀態">體</button><button class="buff" data-window="skills" title="武學">武</button><button class="buff" data-window="quests" title="任務">令</button><button class="buff" data-window="inventory" title="法寶">寶</button></div>
     <div class="target plaque hidden" id="target-panel"><div class="target-name"><span id="target-level">Lv. 3</span><b id="target-title">溪畔水鬼</b><button id="deselect-target">×</button></div><div class="bar target-bar"><i id="target-fill"></i></div><small id="target-hp">100 / 100</small></div>
     <div class="combat-log plaque"><div id="combat-lines"><p>你來到了凌水港。海霧中，遠處傳來微弱的妖聲。</p><p class="system">旅程開始了。點擊地面移動，右鍵對目標行動。</p></div><form id="chat-form"><select id="chat-channel" aria-label="聊天頻道"><option>附近</option><option>隊伍</option><option>世界</option><option>密語</option></select><input id="chat-input" maxlength="100" placeholder="輸入訊息或 /sit 打坐"><button type="submit">送出</button></form></div>
     <div class="character-stats plaque"><div class="stats-title">人物屬性 <button data-window="status">詳細</button></div><div class="stat-pairs"><span>體力 <b id="stat-str">12</b></span><span>智慧 <b id="stat-int">12</b></span><span>魅力 <b>12</b></span><span>體質 <b id="stat-con">12</b></span><span>靈活 <b>12</b></span><span>運氣 <b>12</b></span></div><div class="elements"><span>火 <i>12</i></span><span>水 <i>12</i></span><span>風 <i>12</i></span><span>雷 <i>12</i></span><span>陰陽 <i>12</i></span></div></div>
@@ -49,5 +47,6 @@
   <div id="toast" class="toast hidden"></div>
   <div class="help-strip hidden" id="help-strip">左鍵點地移動　・　點擊怪物選取　・　Q 普通攻擊　・　1–8 使用技能　・　/ sit 打坐　・　Tab 地圖</div>
 </main>
+<input id="save-file" type="file" accept="application/json,.json" hidden>
 <script src="src/game.js" defer></script>
 </body></html>

@@ -1,0 +1,8 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+/index.html
+  Cache-Control: no-cache
+/src/*
+  Cache-Control: no-cache

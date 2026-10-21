@@ -1,23 +1,49 @@
-# 軒轅劍網路版・高解析瀏覽器重製
+# 軒轅劍網路版・瀏覽器重製
 
-以玩家提供的實機畫面與客戶端素材為參照，製作可直接在瀏覽器操作的單機重製版。保留原作 4:3 綠金色 HUD 氣氛、第三人稱場景、角色建立流程與常見鍵鼠配置，並以重新繪製的高解析場景和角色素材取代低解析放大效果。原始客戶端專有格式尚未直接載入瀏覽器；目前場景重製素材依照提供的截圖製作。
+可直接部署到 Cloudflare 的單機瀏覽器遊戲。經典 4:3 綠金 HUD、青綠登入場景、角色建立、探索戰鬥、技能熟練、商店補給與本機存檔。這是持續製作中的重製版，尚未達到原版全部內容一致；多人、真正帳號、交易和公會尚未實作。[內容來源與完成範圍](docs/REMAKE-SOURCES.md)。
 
-## 目前內容
+## 本機執行
 
-- 種族：人類、修羅、仙靈。職業按種族限制：人類可選劍客、刀客、刺客、陰陽師、藥師；修羅可選魔刀客、修羅醫；仙靈可選符師。
-- 地圖：廣靈鎮、凌水港、迷霧森林、陰淮平原、崑崙山、巨石林、長城平原、赤壁沙漠、怒火山、九曲結界、龍棲山、靜咫鎮（灰白／彩色）、冰封之谷、天外天、幽冥界、通天塔。
-- 操作：左鍵點地移動、右鍵目標動作、WASD／方向鍵移動、Q 普攻、R 或 NumLock 切換自動奔跑、Tab 開地圖、PageUp／PageDown 縮放、空白鍵或 `/sit` 打坐、1–8 使用技能。
-- 技能熟練與冥思修練、HP／MP 回復、任務、稱號獎勵、裝備限制、包裹擴充、招魂號角與法寶升級。
-- 原作配樂播放、戰鬥音效、瀏覽器本機存檔。
+需要 Python 3，遊戲本身不需要 npm 套件、資料庫或 API 金鑰。
 
-## 預覽
+```sh
+python3 scripts/build.py
+python3 -m http.server 8080 --directory public
+```
 
-在專案根目錄執行 `python -m http.server 8080`，開啟 `http://localhost:8080`。
+在瀏覽器開啟本機伺服器，點「訪客登入」→「進入遊戲」。可先建立自己的人物，再找港口嚮導查看操作及前往雜貨舖。進度儲存在目前瀏覽器；系統設定可匯出/匯入 JSON 存檔。登入名稱僅供本機展示，不是線上帳號，不收集密碼。
 
-## Cloudflare Workers 部署
+## Cloudflare Workers 部署（建議）
 
-`wrangler.toml` 使用 Workers Static Assets，無需建置步驟。Cloudflare Workers Builds 設定根目錄 `/`、Build command 留空、Deploy command 設為 `npx wrangler deploy`，並將 Production branch 設為 `main`。若 GitHub 已連接 Workers Builds，推送至 `main` 會觸發部署。
+在 Cloudflare Workers 連接此 GitHub 儲存庫，設定：
 
-## 重製範圍
+| 設定 | 值 |
+| --- | --- |
+| Production branch | `main` |
+| Root directory | 儲存庫根目錄 |
+| Build command | `python3 scripts/build.py` |
+| Deploy command | `npx wrangler deploy` |
 
-目前是瀏覽器端單機版本，登入、聊天和隊伍為本機展示流程，尚無原作伺服器帳號或多人同步。舊客戶端的 `.PLY`、`.WLD`、`.S3D`、`.ACT`、`.TEX` 等格式屬專有二進位資源，本版本未將其解析器或服務端納入。任務文字、數值及動畫仍須依原始遊戲資料逐項校對。
+`wrangler.toml` 已指向 `public/`；建置只複製遊戲必需的公開檔案。部署成功後即可由 Cloudflare 提供的網址遊玩。若已連接 Workers Builds，推送至 `main` 會觸發部署；須以 Cloudflare 的實際部署結果為準。
+
+若使用 **Cloudflare Pages**：Framework preset 選 None，Build command 同上，Build output directory 設為 `public`，不需 Workers deploy command。
+
+不要將原始儲存庫根目錄直接作為公開目錄。`public/` 為生成檔，不提交 Git；每次由 build command 重建。原本 Build command 留空的既有設定需改成上述指令。
+
+## 操作
+
+- 左鍵點地或 WASD／方向鍵移動；點擊妖物選取，Q 普攻，1–8 使用技能。
+- R / NumLock 自動奔跑；PageUp / PageDown 縮放；右鍵對目標行動。
+- Tab 開地圖；空白鍵或 `/sit` 打坐；F1–F4 開人物、技能、任務、包裹。
+- 港口嚮導提供入門說明；雜貨舖購買藥草、靈泉水、包裹與招魂號角。
+- 包裹中點選物品使用/裝備；廣靈鎮為安全區，沒有戰鬥目標。
+
+## 驗證
+
+```sh
+node --check src/game.js
+python3 scripts/build.py
+python3 scripts/smoke_test.py
+```
+
+瀏覽器測試需 Python `playwright` 套件與 `/usr/bin/chromium`，雲端開發環境已具備。測試使用暫時的本機HTTP伺服器與全新瀏覽器，不接觸玩家存檔；驗證角色、商店、安全區、戰鬥、存檔備份還原及手機介面。

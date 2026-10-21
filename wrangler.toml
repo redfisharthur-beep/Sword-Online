@@ -2,4 +2,4 @@ name = "sword-online"
 compatibility_date = "2026-10-21"
 
 [assets]
-directory = "."
+directory = "./public"
