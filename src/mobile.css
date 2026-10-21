@@ -1,0 +1,20 @@
+/* Touch-first controller; show on touch screens / narrow landscape devices. */
+#mobile-controller{display:none;pointer-events:none}
+@media (pointer:coarse),(max-width:900px){
+#mobile-controller{display:block;position:absolute;inset:0;z-index:35;pointer-events:none;font-family:"Noto Sans TC",sans-serif;color:#f3eddd}
+#mobile-controller button,#mobile-controller #joy,#mobile-controller #quest-guide{pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none}
+#mobile-controller #joy{position:absolute;left:4%;bottom:9%;width:clamp(90px,16vw,154px);aspect-ratio:1;border:2px solid #b8a882aa;border-radius:50%;background:#11221b88;box-shadow:0 2px 18px #0008;display:grid;place-items:center}
+#joy-knob{height:39%;width:39%;border-radius:50%;background:#c9cfbdba;border:2px solid #f3e5ba;box-shadow:0 1px 12px #000b;will-change:transform}
+.mobile-actions{position:absolute;right:3%;bottom:7%;width:clamp(190px,31vw,315px);height:clamp(112px,24vh,195px)}
+.mobile-actions button{position:absolute;width:22%;aspect-ratio:1;border-radius:50%;background:linear-gradient(145deg,#435e58ee,#1d302fef);border:2px solid #d9bb7b;color:#fff3d7;font-weight:800;font-size:clamp(11px,1.6vw,17px);text-shadow:0 1px 3px black;box-shadow:0 3px 12px #000a}
+.mobile-actions .basic{right:0;bottom:8%;width:30%;background:linear-gradient(145deg,#855b3c,#322b26)}
+.mobile-actions [data-key="1"]{right:32%;bottom:1%}.mobile-actions [data-key="2"]{right:35%;bottom:48%}.mobile-actions [data-key="3"]{right:11%;bottom:63%}
+#mobile-quest,#mobile-bag{width:20%!important;aspect-ratio:1!important;font-size:11px!important}
+#mobile-quest{right:67%;top:0}#mobile-bag{right:66%;top:47%}
+#mobile-fullscreen{position:absolute;right:2%;top:2%;border:1px solid #d1c29b;border-radius:6px;background:#152f29cc;color:#fff;padding:5px 8px;font-size:11px}
+#quest-guide{position:absolute;left:30%;top:2%;display:flex;align-items:center;gap:7px;background:#122820cf;border:1px solid #b9a57b80;padding:5px 9px;border-radius:7px;max-width:36%;font-size:12px}
+#quest-guide b{color:#f8d990;font-size:20px}#quest-guide small{font-size:10px}
+.game-ui:not(.hidden)~#mobile-controller{display:block}
+#mobile-controller{display:none}
+@media(max-height:480px){.combat-log,.character-stats,.left-hotbar,.skillbar-wrap,.mini-actions,.world-services,.left-icons,.party{display:none!important}.game-ui .top-right{right:5px;top:6px}.game-ui .vitals{display:none!important}}
+}
