@@ -45,8 +45,10 @@ const foe=new THREE.Group();scene.add(foe);const enemyParts=makeHuman(foe,true);
 const npc=new THREE.Group();scene.add(npc);makeHuman(npc);npc.position.set(-4,0,-9);npc.rotation.y=.4;
 const marker=mesh(new THREE.ConeGeometry(.55,1.3,5),new THREE.MeshBasicMaterial({color:0xffdb71}),-4,5,-9);marker.rotation.x=Math.PI;
 const halo=mesh(new THREE.TorusGeometry(.85,.07,6,32),new THREE.MeshBasicMaterial({color:0xffd878}),-4,.1,-9);halo.rotation.x=-Math.PI/2;
-const effects=[];const clock=new THREE.Clock();let previousZone=-1,previousAttack=0;
-const objective=document.createElement('div');objective.id='objective3d';objective.innerHTML='<b>◆ 主線任務</b><span>前往目標位置</span><small>方向指示僅為示範，任務座標待補</small>';host.append(objective);
+const effects=[];const clock=new THREE.Clock();let previousZone=-1,previousAttack=0;const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
+const objective=document.createElement('div');objective.id='objective3d';objective.innerHTML='<b>◆ 主線任務</b><span>前往目標位置</span><small>目前為場景內相對方向，不是原版地圖座標</small>';host.append(objective);
+canvas.style.pointerEvents='auto';
+canvas.addEventListener('pointerdown',e=>{if(e.target!==canvas)return;const s=window.SwordBridge?.snapshot();if(s?.screen!=='ui'||!s.enemy?.alive)return;const r=canvas.getBoundingClientRect();pointer.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);raycaster.setFromCamera(pointer,camera);if(raycaster.intersectObject(foe,true).length)window.SwordBridge.selectEnemy()});
 function fx(){const flash=mesh(new THREE.RingGeometry(.3,2.1,24),new THREE.MeshBasicMaterial({color:0xe6d39d,transparent:true,opacity:.9,side:THREE.DoubleSide}),player.position.x,1.4,player.position.z-1.4);flash.rotation.y=Math.PI/2;effects.push({mesh:flash,time:.3})}
 function update(){
 requestAnimationFrame(update);const s=window.SwordBridge?.snapshot();const visible=s?.screen==='ui';canvas.style.display=visible?'block':'none';objective.style.display=visible?'flex':'none';if(!visible)return;
@@ -62,7 +64,7 @@ const e=s.enemy;foe.visible=!!e?.alive;
 if(e){foe.position.set((e.x-.46)*100,0,(e.y-.64)*100);enemyParts.larm.rotation.x=Math.sin(time*4)*.25;enemyParts.rarm.rotation.x=-Math.sin(time*4)*.25}
 marker.position.y=4.6+Math.sin(time*2)*.3;halo.rotation.z=time*.8;
 const desired=new THREE.Vector3(player.position.x,11,player.position.z+18);camera.position.lerp(desired,Math.min(1,dt*4.5));camera.lookAt(player.position.x,1.1,player.position.z-4);
-const q=s.quests?.find(q=>!q.done);objective.querySelector('span').textContent=q?`${q.name}　${q.progress}/${q.need}`:'探索世界';
+const q=s.quests?.find(q=>!q.done);const destination=s.enemy?.alive?foe.position:npc.position;const d=Math.round(Math.hypot(destination.x-player.position.x,destination.z-player.position.z));const bearing=Math.atan2(destination.x-player.position.x,player.position.z-destination.z);const arrow=['↑','↗','→','↘','↓','↙','←','↖'][((Math.round(bearing/(Math.PI/4))%8)+8)%8];objective.querySelector('span').textContent=q?`${arrow} ${q.name} ${q.progress}/${q.need} · 約 ${d}m`:'探索世界';
 for(let i=effects.length-1;i>=0;i--){const f=effects[i];f.time-=dt;f.mesh.scale.multiplyScalar(1+dt*5);f.mesh.material.opacity=Math.max(0,f.time*3);if(f.time<=0){scene.remove(f.mesh);f.mesh.geometry.dispose();f.mesh.material.dispose();effects.splice(i,1)}}
 renderer.render(scene,camera)
 }
