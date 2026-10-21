@@ -21,7 +21,7 @@
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   function resize(){dpr=Math.min(devicePixelRatio||1,2);W=canvas.clientWidth;H=canvas.clientHeight;canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high'}
   addEventListener('resize',resize); resize();
-  function showScreen(id){screens.forEach(s=>$('#'+s).classList.toggle('hidden',s!==id));el.hud.classList.toggle('hidden',id!=='hud');running=id==='hud';if(running){updateCharacterHud();buildSkills();say('系統　歡迎來到崑崙大地。');}}
+  function showScreen(id){screens.forEach(s=>$('#'+s).classList.toggle('hidden',s!==id));el.hud.classList.toggle('hidden',id!=='hud');running=id==='hud';if(running){updateCharacterHud();buildSkills();say('系統　登入成功。');}}
   function toast(s){el.toast.textContent=s;el.toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.toast.classList.remove('show'),1700)}
   function say(s){const [who,...rest]=s.split('　');const p=document.createElement('p');const b=document.createElement('b');b.textContent=who+'：';p.append(b,document.createTextNode(rest.join('　')));el.chatLog.append(p);while(el.chatLog.children.length>30)el.chatLog.firstElementChild.remove();el.chatLog.scrollTop=el.chatLog.scrollHeight}
   function sound(freq=520){if(!audioOn)return;try{audioCtx ||= new (AudioContext||webkitAudioContext)();const t=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=freq;g.gain.setValueAtTime(.045,t);g.gain.exponentialRampToValueAtTime(.001,t+.1);o.start(t);o.stop(t+.11)}catch(_){}}
