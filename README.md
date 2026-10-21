@@ -21,14 +21,14 @@ python3 -m http.server 8080 --directory public
 | --- | --- |
 | Production branch | `main` |
 | Root directory | 儲存庫根目錄 |
-| Build command | `python3 scripts/build.py` |
+| Build command | 留空（Wrangler 自動執行建置） |
 | Deploy command | `npx wrangler deploy` |
 
-`wrangler.toml` 已指向 `public/`；建置只複製遊戲必需的公開檔案。部署成功後即可由 Cloudflare 提供的網址遊玩。若已連接 Workers Builds，推送至 `main` 會觸發部署；須以 Cloudflare 的實際部署結果為準。
+`wrangler.toml` 的 `[build]` 會在部署前自動執行 `python3 scripts/build.py`，產生 `public/`；只複製遊戲必需的公開檔案。部署成功後即可由 Cloudflare 提供的網址遊玩。若已連接 Workers Builds，推送至 `main` 會觸發部署；須以 Cloudflare 的實際部署結果為準。
 
-若使用 **Cloudflare Pages**：Framework preset 選 None，Build command 同上，Build output directory 設為 `public`，不需 Workers deploy command。
+若使用 **Cloudflare Pages**：Framework preset 選 None，Build command 設為 `python3 scripts/build.py`，Build output directory 設為 `public`，不需 Workers deploy command。
 
-不要將原始儲存庫根目錄直接作為公開目錄。`public/` 為生成檔，不提交 Git；每次由 build command 重建。原本 Build command 留空的既有設定需改成上述指令。
+不要將原始儲存庫根目錄直接作為公開目錄。`public/` 為生成檔，不提交 Git；每次由 Wrangler 自動重建。既有 Workers 設定只需保留 `npx wrangler deploy`，Build command 可留空。
 
 ## 操作
 
