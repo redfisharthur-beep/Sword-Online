@@ -35,7 +35,7 @@ const body=materials[enemy?'enemy':'cloth'];const head=mesh(new THREE.SphereGeom
 const hair=mesh(new THREE.SphereGeometry(.57,12,8),enemy?materials.enemy:materials.wood,0,3.08,-.08,parent);hair.scale.y=.43;
 box(0,1.9,0,1.2,1.45,.75,body,parent);
 const larm=new THREE.Group(),rarm=new THREE.Group(),lleg=new THREE.Group(),rleg=new THREE.Group();
-for(const [g,x,y] of [[larm,-.85,2.5],[rarm,.85,2.5],[lleg,-.35,1.15],[rleg,.35,1.15]]){g.position.set(x,y,0);parent.add(g);box(0,-.5,0,g===lleg||g===rleg?.4:.36,1,.38,g===lleg||g===rleg?materials.wood:body,g)}
+for(const [g,x,y] of [[larm,-.85,2.5],[rarm,.85,2.5],[lleg,-.35,1.15],[rleg,.35,1.15]]){g.position.set(x,y,0);parent.add(g);box(0,-.5,0,(g===lleg||g===rleg)?.4:.36,1,.38,(g===lleg||g===rleg)?materials.wood:body,g)}
 box(0,1.1,.03,1.05,.35,.65,materials.gold,parent);
 const blade=new THREE.Group();rarm.add(blade);blade.position.set(.1,-1.05,.1);box(0,-.5,0,.16,1.35,.17,materials.metal,blade);box(0,.08,0,.65,.12,.2,materials.gold,blade);
 return {larm,rarm,lleg,rleg,blade,head}
