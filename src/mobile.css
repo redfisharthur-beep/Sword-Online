@@ -18,3 +18,14 @@
 #mobile-controller{display:none}
 @media(max-height:480px){.combat-log,.character-stats,.left-hotbar,.skillbar-wrap,.mini-actions,.world-services,.left-icons,.party{display:none!important}.game-ui .top-right{right:5px;top:6px}.game-ui .vitals{display:none!important}}
 }
+
+/* Revision: immersive mobile play field; avoid desktop HUD obscuring scene */
+@media (pointer:coarse),(max-width:900px){
+.game-ui .top-left{left:env(safe-area-inset-left, 4px);top:4px;transform:scale(.78);transform-origin:top left}
+.game-ui .top-right{right:5px;top:5px}
+.game-ui .combat-log,.game-ui .character-stats,.game-ui .left-hotbar,.game-ui .skillbar-wrap,.game-ui .mini-actions,.game-ui .world-services,.game-ui .left-icons,.game-ui .party{display:none!important}
+.game-ui .target{top:11%;left:50%;transform:translateX(-50%);max-width:200px}
+#quest-guide{top:7px;left:33%;font-size:11px;max-width:32%;z-index:2}
+#mobile-controller .mobile-actions button:active{filter:brightness(1.4);transform:scale(.93)}
+#mobile-controller #joy{bottom:max(8%,env(safe-area-inset-bottom, 0px))}
+}
