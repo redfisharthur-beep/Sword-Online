@@ -8,9 +8,16 @@
 
 在專案根目錄執行 `python -m http.server 8080`，再開啟 `http://localhost:8080`。
 
-## Cloudflare Pages
+## Cloudflare Workers
 
-這是無建置步驟的靜態網站。把 GitHub 儲存庫 `redfisharthur-beep/Sword-Online` 連接至 Cloudflare Pages，Production branch 設為 `main`，Build command 留空，Build output directory 設為 `.`。`wrangler.toml` 已設定輸出目錄。Cloudflare 專案和公開網址尚未建立。
+這是無建置步驟的靜態瀏覽器遊戲，使用 Cloudflare Workers Static Assets 部署。Workers Builds 設定：
+
+- Production branch：`main`
+- Root directory：`/`
+- Build command：留空
+- Deploy command：`npx wrangler deploy`
+
+`wrangler.toml` 已指向專案根目錄的靜態檔案。推送到 `main` 後，Workers Builds 會部署至 `sword-online.workers.dev`（若已啟用 workers.dev 網域）。
 
 ## 待依原作資料校準
 
