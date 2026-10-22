@@ -1,0 +1,36 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>軒轅劍網路版｜原始角色動作檢視</title>
+<style>html,body{margin:0;background:#101819;color:#f3e9d0;font-family:"Noto Sans TC",sans-serif}#stage{position:relative;height:80vh;min-height:400px}canvas{display:block}.tools{position:absolute;top:12px;left:12px;background:#142521ee;padding:15px;border:1px solid #a89463;border-radius:5px;z-index:2;max-width:320px}.tools h1{font-size:16px;margin:0 0 12px}.tools p{font-size:12px;line-height:1.5}.tools button,.tools input{accent-color:#c3ac74}.tools button{padding:7px;background:#4b594d;color:white;border:1px solid #b0a37d;border-radius:4px}.footer{max-width:1000px;margin:auto;padding:14px;font-size:13px;line-height:1.7}.footer b{color:#e7c78a}</style></head>
+<body><div id="stage"><div class="tools"><h1>CHR00001｜原版變換矩陣</h1><p>44 個節點 · 60 個姿態<br>可旋轉／縮放／逐格檢視</p><button id="play">暫停</button> <label>影格 <input type="range" min="0" max="59" value="0" id="frame"></label> <span id="count">0</span><p><label><input type="checkbox" id="connect" checked> 顯示推定鄰接線（非原始骨架綁定）</label></p><p id="status">載入原始動作資料中…</p></div></div>
+<div class="footer"><b>來源：原始 MODEL/CHR00001.PLY。</b> 此工具顯示實際讀取的 4×4 矩陣平移位置。線段只依節點間的平均距離及姿態穩定性推定，用於研究，不代表原版骨架階層。尚未解出網格、UV、蒙皮權重或原始動畫 FPS，因此不稱為已完成的原版 3D 人物。</div>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js';
+import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/controls/OrbitControls.js';
+const host=document.getElementById('stage'),renderer=new THREE.WebGLRenderer({antialias:true});host.prepend(renderer.domElement);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const scene=new THREE.Scene();scene.background=new THREE.Color('#1a2927');
+const camera=new THREE.PerspectiveCamera(52,1,.1,1000);camera.position.set(180,115,190);
+const orbit=new OrbitControls(camera,renderer.domElement);orbit.target.set(0,75,0);orbit.update();
+scene.add(new THREE.GridHelper(250,20,0x71857b,0x394b45));scene.add(new THREE.AxesHelper(20));
+const geo=new THREE.SphereGeometry(1.9,10,8),jointMat=new THREE.MeshBasicMaterial({color:0xd7bb80}),rootMat=new THREE.MeshBasicMaterial({color:0xe77b6b});
+const nodes=Array.from({length:44},(_,i)=>{const mesh=new THREE.Mesh(geo,i===0?rootMat:jointMat);scene.add(mesh);return mesh});
+const lines=new THREE.LineSegments(new THREE.BufferGeometry(),new THREE.LineBasicMaterial({color:0x79b3aa,transparent:true,opacity:.6}));scene.add(lines);
+const frame=document.getElementById('frame'),counter=document.getElementById('count'),play=document.getElementById('play'),connect=document.getElementById('connect'),status=document.getElementById('status');
+let frames=[],pairs=[],running=true,time=0;
+play.onclick=()=>{running=!running;play.textContent=running?'暫停':'播放'};
+frame.oninput=()=>{running=false;play.textContent='播放';time=Number(frame.value)};
+connect.onchange=()=>lines.visible=connect.checked;
+function inferLinks(){
+ const n=44;const ranked=[];
+ for(let a=0;a<n;a++)for(let b=a+1;b<n;b++){
+  const ds=frames.map(f=>Math.hypot(f[a][0]-f[b][0],f[a][1]-f[b][1],f[a][2]-f[b][2]));
+  const mean=ds.reduce((x,y)=>x+y,0)/ds.length;
+  const variance=ds.reduce((x,y)=>x+(y-mean)**2,0)/ds.length;
+  if(mean>1&&mean<35)ranked.push({a,b,score:Math.sqrt(variance)+mean*.02});
+ }
+ ranked.sort((a,b)=>a.score-b.score);
+ const parent=Array.from({length:n},(_,i)=>i),find=i=>parent[i]===i?i:parent[i]=find(parent[i]);
+ for(const edge of ranked){const a=find(edge.a),b=find(edge.b);if(a!==b){parent[a]=b;pairs.push([edge.a,edge.b]);if(pairs.length===n-1)break}}
+}
+fetch('rig_frames.json').then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(data=>{frames=data.frames||data.coordinates;inferLinks();status.textContent='原始動作資料已載入（12 fps 僅供預覽）'}).catch(err=>{status.textContent='無法讀取 JSON：'+err.message+'。請使用 HTTP 伺服器開啟'});
+let last=performance.now();function tick(now){requestAnimationFrame(tick);const dt=Math.min(.05,(now-last)/1000);last=now;if(frames.length){if(running)time=(time+dt*12)%frames.length;const f=frames[Math.floor(time)];for(let i=0;i<nodes.length;i++)nodes[i].position.set(...f[i]);const v=new Float32Array(pairs.length*6);pairs.forEach(([a,b],i)=>{v.set(f[a],i*6);v.set(f[b],i*6+3)});lines.geometry.setAttribute('position',new THREE.BufferAttribute(v,3));lines.geometry.computeBoundingSphere();frame.value=Math.floor(time);counter.textContent=Math.floor(time)}renderer.render(scene,camera)}
+function resize(){renderer.setSize(host.clientWidth,host.clientHeight);camera.aspect=host.clientWidth/host.clientHeight;camera.updateProjectionMatrix()}window.addEventListener('resize',resize);resize();requestAnimationFrame(tick);
+</script></body></html>
